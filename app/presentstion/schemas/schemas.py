@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Any
 
+
 class CardBase(BaseModel):
     name: str
     description: str
