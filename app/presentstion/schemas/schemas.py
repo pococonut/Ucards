@@ -5,9 +5,11 @@ from typing import Any
 class CardBase(BaseModel):
     name: str
     description: str
+    next_review: int
+    level: str
 
 
-class Card(CardBase):
+class CardSh(CardBase):
     id: str
 
 

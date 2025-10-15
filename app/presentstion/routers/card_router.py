@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 
 from presentstion.dependencies import get_card_service
 from application.services.card_service import CardService
-from presentstion.schemas.schemas import Card, CardBase, UpdatedParameter
+from presentstion.schemas.schemas import CardSh, CardBase, UpdatedParameter
+
 
 router = APIRouter()
 
@@ -12,40 +13,31 @@ async def get_cards(card_service: CardService = Depends(get_card_service)):
     return card_service.get_all_cards()
 
 
-# @router.post("/card")
-# async def add_card(card: CardBase):
-#     card = Card(
-#         id=str(len(cards)), 
-#         name=card.name, 
-#         description=card.description
-#     )
-#     cards.append(card.model_dump())
-#     return card
+@router.get("/card/{card_id}")
+async def get_card(card_id: str, 
+                   card_service: CardService = Depends(get_card_service)):
+    card = card_service.get_card_by_id(card_id)
+    if not card:
+        raise HTTPException(status_code=404, detail="Card not found")
+    return card
 
 
-# @router.get("/card/{card_id}")
-# async def get_card(card_id: str):
-#     res = next(filter(lambda card: card["id"] == card_id, cards))
-#     return res
+@router.post("/card")
+def post_card(card: CardBase, 
+              card_service: CardService = Depends(get_card_service)):
+    card_service.add_card(card)
+    return card
 
 
-# @router.put("/card/{card_id}")
-# async def change_card(card_id: str, updated_card: CardBase):
-#     card = next(filter(lambda card: card["id"] == card_id, cards))
-#     card["name"] = updated_card.name
-#     card["description"] = updated_card.description
-#     return card
-    
-
-# @router.patch("/patch/{card_id}")
-# async def patch_card(card_id: str, data: UpdatedParameter):
-#     card = next(filter(lambda card: card["id"] == card_id, cards))
-#     card[data.parameter] = data.value
-#     return card
+@router.put("/card")
+def put_card(new_card: CardBase, 
+             card_id: str,
+             card_service: CardService = Depends(get_card_service)):
+    return  card_service.change_card(card_id, new_card)
 
 
-# @router.delete("/delete/{card_id}")
-# async def delete_card(card_id: str):
-#     card = next(filter(lambda card: card["id"] == card_id, cards))
-#     card_dict_id = cards.index(card)
-#     return cards.pop(card_dict_id)
+@router.delete("/card")
+def del_card(card_id: str,
+             card_service: CardService = Depends(get_card_service)):
+    return card_service.delete_card(card_id)
+
