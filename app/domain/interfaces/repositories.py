@@ -38,9 +38,9 @@ class CardRepository(ABC):
         pass
 
 
-class IntervalAlgorithm(ABC):
+class IntervalAlgorithmRepository(ABC):
     "Контракт алгоритма для повторения"
     @classmethod
-    def calculate_interval(self, card: Card, quality: int) -> int:
+    def calculate_interval(self, card: Card, quality: int) -> Card:
         "Вычисление интервала для повтора карточки"
         pass

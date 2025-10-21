@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 
-from presentstion.dependencies import get_card_service
-from application.services.card_service import CardService
-from presentstion.schemas.schemas import CardSh, CardBase, UpdatedParameter
+from presentstion.dependencies import get_card_service, get_sm2_service
+from application.services.card_service import CardService, SM2Service
+from presentstion.schemas.schemas import CardSh, CardBase
 
 
 router = APIRouter()
@@ -45,5 +45,8 @@ def del_card(card_id: str,
 @router.post("/card/answer")
 def post_answer(card: CardSh, 
                 quality: int, 
-                card_service: CardService = Depends(get_card_service)):
-    return card_service.answer(card, quality)
+                card_service: CardService = Depends(get_card_service),
+                algorithm_service: SM2Service = Depends(get_sm2_service)):
+    card_new = algorithm_service.calculate_interval(card, quality)
+    return card_service.change_card(card_new.id, card_new)
+

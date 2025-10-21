@@ -1,5 +1,5 @@
 from domain.entities.card import Card
-from domain.interfaces.repositories import CardRepository, IntervalAlgorithm
+from domain.interfaces.repositories import CardRepository, IntervalAlgorithmRepository
 
 
 cards = [
@@ -8,12 +8,12 @@ cards = [
 ]
 
 
-class SM2Repository(IntervalAlgorithm):
+class SM2Repository(IntervalAlgorithmRepository):
     """
     Реализация алгоритма SM-2
     """
-    def calculate_interval(self, I, EF, q):
-        return I, EF
+    def calculate_interval(self, card: Card, q: int):
+        return card
 
 
 class DBCardRepository(CardRepository):
@@ -47,5 +47,3 @@ class DBCardRepository(CardRepository):
         card_index = cards.index(card)
         return cards.pop(card_index)
     
-    def answer(self, card: Card, quality: int) -> Card:
-        return Card
