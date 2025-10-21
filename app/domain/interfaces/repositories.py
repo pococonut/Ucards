@@ -32,4 +32,15 @@ class CardRepository(ABC):
         """Удалить карточку"""
         pass
 
+    @classmethod
+    def answer(self, card: Card, quality) -> Card:
+        """Ответить на карточку"""
+        pass
 
+
+class IntervalAlgorithm(ABC):
+    "Контракт алгоритма для повторения"
+    @classmethod
+    def calculate_interval(self, card: Card, quality: int) -> int:
+        "Вычисление интервала для повтора карточки"
+        pass

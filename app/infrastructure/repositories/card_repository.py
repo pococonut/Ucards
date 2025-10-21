@@ -1,11 +1,19 @@
 from domain.entities.card import Card
-from domain.interfaces.repositories import CardRepository
+from domain.interfaces.repositories import CardRepository, IntervalAlgorithm
 
 
 cards = [
-    Card(id="0", name="hello", description="привет", next_review=1, level="easy"),
-    Card(id="1", name="world", description="мир", next_review=2, level="medium")
+    Card(id="0", name="hello", description="привет", interval=1, ef=2.5, quality=1),
+    Card(id="1", name="world", description="мир", interval=1, ef=2.5, quality=1)
 ]
+
+
+class SM2Repository(IntervalAlgorithm):
+    """
+    Реализация алгоритма SM-2
+    """
+    def calculate_interval(self, I, EF, q):
+        return I, EF
 
 
 class DBCardRepository(CardRepository):
@@ -29,11 +37,15 @@ class DBCardRepository(CardRepository):
         card = next(filter(lambda card: card.id == card_id, cards))
         card.name = new_card.name
         card.description = new_card.description
-        card.next_review = new_card.next_review
-        card.level = new_card.level
+        card.interval = new_card.interval
+        card.ef = new_card.ef
+        card.quality = new_card.quality
         return card   
 
     def delete_card(self, card_id: str) -> Card:
         card = next(filter(lambda card: card.id == card_id, cards))
         card_index = cards.index(card)
         return cards.pop(card_index)
+    
+    def answer(self, card: Card, quality: int) -> Card:
+        return Card

@@ -11,5 +11,6 @@ class Card:
     id: str
     name: str
     description: str
-    next_review: int 
-    level: str
+    interval: float 
+    ef: float
+    quality: int

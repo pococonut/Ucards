@@ -41,3 +41,9 @@ def del_card(card_id: str,
              card_service: CardService = Depends(get_card_service)):
     return card_service.delete_card(card_id)
 
+
+@router.post("/card/answer")
+def post_answer(card: CardSh, 
+                quality: int, 
+                card_service: CardService = Depends(get_card_service)):
+    return card_service.answer(card, quality)
