@@ -5,9 +5,6 @@ from typing import Any
 class CardBase(BaseModel):
     name: str
     description: str
-    # interval: float 
-    # ef: float
-    # quality: int
 
 
 class CardSh(CardBase):

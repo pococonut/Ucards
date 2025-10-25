@@ -31,6 +31,12 @@ class SM2Service:
         self._sm2_repository.add_card_params(card_id, params)
         return self._sm2_repository.calculate_interval(card_id, quality)
 
+    def get_card_params(self, card_id: str) -> SM2Params:
+        return self._sm2_repository.get_card_params(card_id)
+    
+    def add_card_params(self, card_id: str, params: SM2Params) -> SM2Params:
+        return self._sm2_repository.add_card_params(card_id, params)
+
 
 class CardService:
     """

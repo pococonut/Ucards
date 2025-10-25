@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 
+from domain.entities.sm2_params import SM2Params
 from presentstion.dependencies import get_card_service, get_sm2_service
 from application.services.card_service import CardService, SM2Service
 from presentstion.schemas.schemas import CardSh, CardBase
@@ -25,8 +26,14 @@ async def get_card(card_id: str,
 @router.post("/card")
 def post_card(card: CardBase, 
               card_service: CardService = Depends(get_card_service)):
-    card_service.add_card(card)
-    return card
+    return card_service.add_card(card)
+
+
+@router.post("/sm2")
+def post_sm2(card_id: str,
+             algorithm_service: SM2Service = Depends(get_sm2_service)):
+    params = SM2Params(id=card_id, interval=1, ef=2.5, quality=1)
+    return algorithm_service.add_card_params(card_id, params=params)
 
 
 @router.put("/card")
