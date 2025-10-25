@@ -11,6 +11,6 @@ class Card:
     id: str
     name: str
     description: str
-    interval: float 
-    ef: float
-    quality: int
+    # interval: float 
+    # ef: float
+    # quality: int

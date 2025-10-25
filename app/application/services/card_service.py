@@ -1,3 +1,4 @@
+from domain.entities.sm2_params import SM2Params
 from infrastructure.repositories.card_repository import SM2Repository
 from domain.entities.card import Card
 from domain.interfaces.repositories import CardRepository
@@ -17,18 +18,18 @@ class SM2Service:
     def __init__(self, sm2_repository: SM2Repository):
         self._sm2_repository = sm2_repository
 
-    def calculate_interval(self, card: Card, quality: int):
-        EF = card.interval
-        I  = card.ef
+    def calculate_interval(self, card_id: str, quality: int):
+        card_params = self._sm2_repository.get_card_params(card_id)
+        EF = card_params.interval
+        I  = card_params.ef
 
         EF_new = max(2.5, EF + (0.1 - (4 - quality) * (0.08 + (4 - quality) * 0.02)))
         I_new = I * EF_new if quality > 2 else 1
 
-        card.ef = EF_new
-        card.interval = I_new
-        card.quality = quality
-
-        return self._sm2_repository.calculate_interval(card, quality)
+        params = SM2Params(id=card_id, ef=EF_new, interval=I_new, quality=quality)
+        
+        self._sm2_repository.add_card_params(card_id, params)
+        return self._sm2_repository.calculate_interval(card_id, quality)
 
 
 class CardService:
@@ -52,10 +53,7 @@ class CardService:
         new_card = Card(
             id=str(len(self._card_repository.get_all_cards())),
             name=card.name,
-            description=card.description,
-            interval=1,
-            ef=2.5,
-            quality=1
+            description=card.description
         )
         return self._card_repository.add_card(new_card)
 

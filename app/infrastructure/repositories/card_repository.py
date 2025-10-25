@@ -1,10 +1,15 @@
+from domain.entities.sm2_params import SM2Params
 from domain.entities.card import Card
 from domain.interfaces.repositories import CardRepository, IntervalAlgorithmRepository
 
 
 cards = [
-    Card(id="0", name="hello", description="привет", interval=1, ef=2.5, quality=1),
-    Card(id="1", name="world", description="мир", interval=1, ef=2.5, quality=1)
+    Card(id="0", name="hello", description="привет"),
+    Card(id="1", name="world", description="мир")
+]
+
+sm2_params = [
+    SM2Params(id="0", interval=1, ef=2.5, quality=1)
 ]
 
 
@@ -12,8 +17,19 @@ class SM2Repository(IntervalAlgorithmRepository):
     """
     Реализация алгоритма SM-2
     """
-    def calculate_interval(self, card: Card, q: int):
-        return card
+    def calculate_interval(self, card_id: str, q: int) -> SM2Params:
+        return next(filter(lambda params: params.id == card_id, sm2_params))
+
+    
+    def get_card_params(self, card_id: str) -> SM2Params:
+        return next(filter(lambda params: params.id == card_id, sm2_params))
+    
+    def add_card_params(self, card_id: str, params: SM2Params) -> SM2Params:
+        card_params = next(filter(lambda params: params.id == card_id, sm2_params))
+        card_params.ef = params.ef
+        card_params.interval = params.interval
+        card_params.quality = params.quality
+        return next(filter(lambda params: params.id == card_id, sm2_params))
 
 
 class DBCardRepository(CardRepository):
@@ -37,9 +53,6 @@ class DBCardRepository(CardRepository):
         card = next(filter(lambda card: card.id == card_id, cards))
         card.name = new_card.name
         card.description = new_card.description
-        card.interval = new_card.interval
-        card.ef = new_card.ef
-        card.quality = new_card.quality
         return card   
 
     def delete_card(self, card_id: str) -> Card:

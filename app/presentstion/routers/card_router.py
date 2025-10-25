@@ -43,10 +43,9 @@ def del_card(card_id: str,
 
 
 @router.post("/card/answer")
-def post_answer(card: CardSh, 
+def post_answer(card_id: str, 
                 quality: int, 
-                card_service: CardService = Depends(get_card_service),
                 algorithm_service: SM2Service = Depends(get_sm2_service)):
-    card_new = algorithm_service.calculate_interval(card, quality)
-    return card_service.change_card(card_new.id, card_new)
+    new_params = algorithm_service.calculate_interval(card_id, quality)
+    return new_params
 
