@@ -28,7 +28,7 @@ class CardRepository(ABC):
         pass
     
     @classmethod
-    def change_card(self, card_id) -> Card:
+    def delete_card(self, card_id) -> Card:
         """Удалить карточку"""
         pass
 
