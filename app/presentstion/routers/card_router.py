@@ -9,12 +9,12 @@ from presentstion.schemas.schemas import CardSh, CardBase
 router = APIRouter()
 
 
-@router.get("/card")
+@router.get("/card", tags=['card'])
 async def get_cards(card_service: CardService = Depends(get_card_service)):
     return card_service.get_all_cards()
 
 
-@router.get("/card/{card_id}")
+@router.get("/card/{card_id}", tags=['card'])
 async def get_card(card_id: str, 
                    card_service: CardService = Depends(get_card_service)):
     card = card_service.get_card_by_id(card_id)
@@ -23,33 +23,26 @@ async def get_card(card_id: str,
     return card
 
 
-@router.post("/card")
+@router.post("/card", tags=['card'])
 def post_card(card: CardBase, 
               card_service: CardService = Depends(get_card_service)):
     return card_service.add_card(card)
 
 
-@router.post("/sm2")
-def post_sm2(card_id: str,
-             algorithm_service: SM2Service = Depends(get_sm2_service)):
-    params = SM2Params(id=card_id, interval=1, ef=2.5, quality=1)
-    return algorithm_service.add_card_params(card_id, params=params)
-
-
-@router.put("/card")
+@router.put("/card", tags=['card'])
 def put_card(new_card: CardBase, 
              card_id: str,
              card_service: CardService = Depends(get_card_service)):
     return  card_service.change_card(card_id, new_card)
 
 
-@router.delete("/card")
+@router.delete("/card", tags=['card'])
 def del_card(card_id: str,
              card_service: CardService = Depends(get_card_service)):
     return card_service.delete_card(card_id)
 
 
-@router.post("/card/answer")
+@router.post("/card/answer", tags=['card'])
 def post_answer(card_id: str, 
                 quality: int, 
                 algorithm_service: SM2Service = Depends(get_sm2_service)):
