@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 
-from domain.entities.sm2_params import SM2Params
 from presentstion.dependencies import get_card_service, get_sm2_service
-from application.services.card_service import CardService, SM2Service
-from presentstion.schemas.schemas import CardSh, CardBase
+from application.services.card_service import CardService
+from application.services.algorithm_service import SM2Service
+from presentstion.schemas.card_schemas import CardBase
 
 
 router = APIRouter()

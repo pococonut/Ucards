@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 
-from domain.entities.sm2_params import SM2Params
+from domain.entities.algorithm import SM2Params
 from presentstion.dependencies import get_sm2_service
-from application.services.card_service import SM2Service
+from application.services.algorithm_service import SM2Service
 
 
 router = APIRouter()
