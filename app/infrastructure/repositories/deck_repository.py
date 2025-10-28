@@ -1,6 +1,7 @@
+from domain.entities.card import Card
 from domain.entities.deck import Deck
 from domain.interfaces.deck_repository import DeckRepository
-
+from infrastructure.repositories.card_repository import cards
 
 decks = [
     Deck(id="0", name="Langs", algorithm="sm2")
@@ -20,6 +21,9 @@ class DBDeckRepository(DeckRepository):
                 return deck
         return None
     
+    def get_cards(self, deck_id) -> list[Card]:
+        return list(filter(lambda card: card.deck_id == deck_id, cards))
+
     def add_deck(self, deck: Deck) -> Deck:
         decks.append(deck)
         return deck

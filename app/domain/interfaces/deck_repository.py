@@ -1,5 +1,6 @@
 from abc import ABC
 
+from domain.entities.card import Card
 from domain.entities.deck import Deck
 
 
@@ -11,6 +12,11 @@ class DeckRepository(ABC):
 
     @classmethod
     def get_deck_by_id(self) -> Deck:
+        """Получить доску по ID"""
+        pass
+
+    @classmethod
+    def get_cards(self, deck_id) -> list[Card]:
         """Получить доску по ID"""
         pass
     

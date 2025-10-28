@@ -23,20 +23,28 @@ async def get_deck(deck_id: str,
     return deck
 
 
+@router.get("/deck/{deck_id}/cards", tags=['deck'])
+async def get_cards(deck_id: str,
+              deck_service: DeckService = Depends(get_deck_service)):
+    return deck_service.get_cards(deck_id)
+
+
 @router.post("/deck", tags=['deck'])
-def post_deck(deck: DeckBase, 
+async def post_deck(deck: DeckBase, 
               deck_service: DeckService = Depends(get_deck_service)):
     return deck_service.add_deck(deck)
 
 
 @router.put("/deck/{deck_id}", tags=['deck'])
-def put_deck(new_deck: DeckBase, 
+async def put_deck(new_deck: DeckBase, 
              deck_id: str,
              deck_service: DeckService = Depends(get_deck_service)):
     return  deck_service.change_deck(deck_id, new_deck)
 
 
 @router.delete("/deck/{deck_id}", tags=['deck'])
-def del_deck(deck_id: str,
+async def del_deck(deck_id: str,
              deck_service: DeckService = Depends(get_deck_service)):
     return deck_service.delete_deck(deck_id)
+
+

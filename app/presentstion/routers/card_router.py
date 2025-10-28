@@ -24,26 +24,26 @@ async def get_card(card_id: str,
 
 
 @router.post("/card", tags=['card'])
-def post_card(card: CardBase, 
+async def post_card(card: CardBase, 
               card_service: CardService = Depends(get_card_service)):
     return card_service.add_card(card)
 
 
 @router.put("/card/{card_id}", tags=['card'])
-def put_card(new_card: CardBase, 
+async def put_card(new_card: CardBase, 
              card_id: str,
              card_service: CardService = Depends(get_card_service)):
     return  card_service.change_card(card_id, new_card)
 
 
 @router.delete("/card/{card_id}", tags=['card'])
-def del_card(card_id: str,
+async def del_card(card_id: str,
              card_service: CardService = Depends(get_card_service)):
     return card_service.delete_card(card_id)
 
 
 @router.post("/card/answer/{card_id}", tags=['card'])
-def post_answer(card_id: str, 
+async def post_answer(card_id: str, 
                 quality: int, 
                 algorithm_service: SM2Service = Depends(get_sm2_service)):
     new_params = algorithm_service.calculate_interval(card_id, quality)

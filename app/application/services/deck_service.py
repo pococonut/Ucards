@@ -1,3 +1,4 @@
+from domain.entities.card import Card
 from domain.entities.deck import Deck
 from domain.interfaces.deck_repository import DeckRepository
 
@@ -14,6 +15,9 @@ class DeckService:
     
     def get_deck_by_id(self, deck_id: str) -> Deck:
         return self._deck_repository.get_deck_by_id(deck_id)
+    
+    def get_cards(self, deck_id) -> list[Card]:
+        return self._deck_repository.get_cards(deck_id)
     
     def add_deck(self, deck: Deck) -> Deck:
         new_deck = Deck(
