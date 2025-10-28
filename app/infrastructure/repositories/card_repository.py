@@ -3,8 +3,8 @@ from domain.interfaces.card_repository import CardRepository
 
 
 cards = [
-    Card(id="0", name="hello", description="привет"),
-    Card(id="1", name="world", description="мир")
+    Card(id="0", deck_id="0", name="hello", description="привет"),
+    Card(id="1", deck_id="0", name="world", description="мир")
 ]
 
 
@@ -27,6 +27,7 @@ class DBCardRepository(CardRepository):
     
     def change_card(self, card_id: str, new_card: Card) -> Card:
         card = next(filter(lambda card: card.id == card_id, cards))
+        card.deck_id = new_card.deck_id
         card.name = new_card.name
         card.description = new_card.description
         return card   

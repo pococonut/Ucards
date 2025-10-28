@@ -22,6 +22,7 @@ class CardService:
     def add_card(self, card: Card) -> Card:
         new_card = Card(
             id=str(len(self._card_repository.get_all_cards())),
+            deck_id=card.deck_id,
             name=card.name,
             description=card.description
         )

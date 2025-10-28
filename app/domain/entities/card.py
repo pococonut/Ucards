@@ -9,5 +9,6 @@ class Card:
     Не знает о БД, API и других внешних вещах.
     """
     id: str
+    deck_id: str
     name: str
     description: str
