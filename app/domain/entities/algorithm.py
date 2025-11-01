@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import date
 
 
 @dataclass
@@ -7,3 +8,4 @@ class SM2Params:
     interval: float
     ef: float
     quality: int
+    show_dt: date

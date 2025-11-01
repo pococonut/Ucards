@@ -1,3 +1,5 @@
+from datetime import date
+from domain.entities.card import Card
 from domain.entities.algorithm import SM2Params
 from infrastructure.repositories.algorithm_repository import SM2Repository
 
@@ -20,11 +22,13 @@ class SM2Service:
         card_params = self._sm2_repository.get_card_params(card_id)
         EF = card_params.interval
         I  = card_params.ef
+        show_dt = card_params.show_dt.toordinal()
 
-        EF_new = max(2.5, EF + (0.1 - (4 - quality) * (0.08 + (4 - quality) * 0.02)))
-        I_new = I * EF_new if quality > 2 else 1
+        EF_new = max(1.3, EF + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)))
+        I_new = round(I * EF_new) if quality > 2 else 1
+        show_dt_new = date.fromordinal(show_dt + I_new)
 
-        params = SM2Params(id=card_id, ef=EF_new, interval=I_new, quality=quality)
+        params = SM2Params(id=card_id, ef=EF_new, interval=I_new, quality=quality, show_dt=show_dt_new)
         
         self._sm2_repository.add_card_params(card_id, params)
         return self._sm2_repository.calculate_interval(card_id, quality)
@@ -32,5 +36,13 @@ class SM2Service:
     def get_card_params(self, card_id: str) -> SM2Params:
         return self._sm2_repository.get_card_params(card_id)
     
+    def get_learning_cards(self, cards) -> list[Card]:
+        res = []
+        for card in cards:
+            params: SM2Params = self.get_card_params(card.id)
+            if params.show_dt <= date.today():
+                res.append(card.id)
+        return res
+
     def add_card_params(self, card_id: str, params: SM2Params) -> SM2Params:
         return self._sm2_repository.add_card_params(card_id, params)

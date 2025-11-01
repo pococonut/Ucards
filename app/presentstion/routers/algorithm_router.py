@@ -1,3 +1,4 @@
+from datetime import date
 from fastapi import APIRouter, Depends
 
 from domain.entities.algorithm import SM2Params
@@ -11,5 +12,5 @@ router = APIRouter()
 @router.post("/initial_variables", tags=['algorithm'])
 async def post_sm2(card_id: str,
              algorithm_service: SM2Service = Depends(get_sm2_service)):
-    params = SM2Params(id=card_id, interval=1, ef=2.5, quality=1)
+    params = SM2Params(id=card_id, interval=1, ef=2.5, quality=1, show_dt=date.today())
     return algorithm_service.add_card_params(card_id, params=params)

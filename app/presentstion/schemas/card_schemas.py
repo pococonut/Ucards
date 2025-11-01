@@ -5,6 +5,7 @@ from typing import Any
 class CardBase(BaseModel):
     name: str
     description: str
+    deck_id: str
 
 
 class CardSh(CardBase):

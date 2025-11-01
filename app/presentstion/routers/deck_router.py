@@ -1,6 +1,9 @@
+from datetime import date
 from fastapi import APIRouter, Depends, HTTPException
 
-from presentstion.dependencies import get_deck_service
+from domain.entities.algorithm import SM2Params
+from application.services.algorithm_service import SM2Service
+from presentstion.dependencies import get_deck_service, get_sm2_service
 from application.services.deck_service import DeckService
 from application.services.deck_service import DeckService
 from presentstion.schemas.deck_schemas import DeckBase
@@ -27,6 +30,15 @@ async def get_deck(deck_id: str,
 async def get_cards(deck_id: str,
               deck_service: DeckService = Depends(get_deck_service)):
     return deck_service.get_cards(deck_id)
+
+
+@router.get("/deck/{deck_id}/learn", tags=['deck'])
+async def get_cards(deck_id: str,
+              deck_service: DeckService = Depends(get_deck_service),
+              algorithm_service: SM2Service = Depends(get_sm2_service)):
+    cards = deck_service.get_cards(deck_id)
+    learning_cards = algorithm_service.get_learning_cards(cards)
+    return learning_cards
 
 
 @router.post("/deck", tags=['deck'])

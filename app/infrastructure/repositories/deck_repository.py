@@ -21,7 +21,7 @@ class DBDeckRepository(DeckRepository):
                 return deck
         return None
     
-    def get_cards(self, deck_id) -> list[Card]:
+    def get_cards(self, deck_id: str) -> list[Card]:
         return list(filter(lambda card: card.deck_id == deck_id, cards))
 
     def add_deck(self, deck: Deck) -> Deck:
