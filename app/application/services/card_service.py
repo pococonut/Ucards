@@ -13,19 +13,9 @@ class CardService:
         return self._card_repository.get_all_cards()
     
     def get_card_by_id(self, card_id: str) -> Card:
-        # Здесь может быть бизнес-логика:
-        # - валидация card_id
-        # - кэширование
-        # - преобразование данных
         return self._card_repository.get_card_by_id(card_id)
     
-    def add_card(self, card: Card) -> Card:
-        new_card = Card(
-            id=str(len(self._card_repository.get_all_cards())),
-            deck_id=card.deck_id,
-            name=card.name,
-            description=card.description
-        )
+    def add_card(self, new_card: Card) -> Card:
         return self._card_repository.add_card(new_card)
 
     def change_card(self, card_id: str, new_card: Card) -> Card:

@@ -14,9 +14,7 @@ class SM2Repository(IntervalAlgorithmRepository):
     """
     Реализация алгоритма SM-2
     """
-    def calculate_interval(self, card_id: str, q: int) -> SM2Params:
-        return next(filter(lambda params: params.id == card_id, sm2_params))
-    
+
     def get_card_params(self, card_id: str) -> SM2Params:
         return next(filter(lambda params: params.id == card_id, sm2_params))
     

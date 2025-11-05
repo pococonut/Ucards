@@ -25,7 +25,12 @@ class DBDeckRepository(DeckRepository):
         return list(filter(lambda card: card.deck_id == deck_id, cards))
 
     def add_deck(self, deck: Deck) -> Deck:
-        decks.append(deck)
+        new_deck = Deck(
+            id=str(len(self.get_all_decks())),
+            name=deck.name,
+            algorithm=deck.algorithm
+        )
+        decks.append(new_deck)
         return deck
     
     def change_deck(self, deck_id: str, new_deck: Deck) -> Deck:

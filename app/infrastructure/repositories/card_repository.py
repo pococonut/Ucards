@@ -22,7 +22,13 @@ class DBCardRepository(CardRepository):
         return None
     
     def add_card(self, card: Card) -> Card:
-        cards.append(card)
+        new_card = Card(
+            id=str(len(self.get_all_cards())),
+            deck_id=card.deck_id,
+            name=card.name,
+            description=card.description
+        )
+        cards.append(new_card)
         return card
     
     def change_card(self, card_id: str, new_card: Card) -> Card:

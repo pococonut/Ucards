@@ -19,12 +19,7 @@ class DeckService:
     def get_cards(self, deck_id) -> list[Card]:
         return self._deck_repository.get_cards(deck_id)
     
-    def add_deck(self, deck: Deck) -> Deck:
-        new_deck = Deck(
-            id=str(len(self._deck_repository.get_all_decks())),
-            name=deck.name,
-            algorithm=deck.algorithm
-        )
+    def add_deck(self, new_deck: Deck) -> Deck:
         return self._deck_repository.add_deck(new_deck)
 
     def change_deck(self, deck_id: str, new_deck: Deck) -> Deck:
