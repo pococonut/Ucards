@@ -26,12 +26,11 @@ class SM2Service:
 
         EF_new = max(1.3, EF + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)))
         I_new = round(I * EF_new) if quality > 2 else 1
-        show_dt_new = date.fromordinal(show_dt + I_new)
-
+        show_dt_new = date.fromordinal(show_dt + I_new) if quality > 2 else date.fromordinal(date.today().toordinal() + 1)
         params = SM2Params(id=card_id, ef=EF_new, interval=I_new, quality=quality, show_dt=show_dt_new)
         
-        self._sm2_repository.add_card_params(card_id, params)
-        return self._sm2_repository.calculate_interval(card_id, quality)
+        self.add_card_params(card_id, params)
+        return params
 
     def get_card_params(self, card_id: str) -> SM2Params:
         return self._sm2_repository.get_card_params(card_id)
