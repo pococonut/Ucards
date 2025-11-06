@@ -44,5 +44,4 @@ class SM2Service:
         return res
 
     def add_card_params(self, card_id: str, params: SM2Params) -> SM2Params:
-        # добавить логику при которой проверяем, есть ли в карточке значения по умолчанию для алгоритма, если нет, то добавить
         return self._sm2_repository.add_card_params(card_id, params)
