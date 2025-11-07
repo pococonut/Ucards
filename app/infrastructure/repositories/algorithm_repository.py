@@ -11,10 +11,19 @@ sm2_params = [
 
 class SM2Repository(IntervalAlgorithmRepository):
     """
-    Реализация алгоритма SM-2
+    Реализация взаимодействия с базой данных для алгоритма SM2.
     """
 
     def get_card_params(self, card_id: str) -> SM2Params:
+        """
+        Возвращает параметры выбранного алгоритма для карточки.
+
+        Args:
+            card_id (str): Уникальный идентификатор карточки.
+
+        Returns:
+            SM2Params: Параметры алгоритма.
+        """
         card_params = list(filter(lambda params: params.id == card_id, sm2_params))
         if not card_params:
             params = SM2Params(id=card_id, interval=1, ef=2.5, quality=1, show_dt=date.today())
@@ -22,6 +31,16 @@ class SM2Repository(IntervalAlgorithmRepository):
         return card_params[0]
     
     def add_card_params(self, card_id: str, params: SM2Params) -> SM2Params:
+        """
+        Сохраняет параметры выбранного алгоритма для карточки.
+
+        Args:
+            card_id (str): Уникальный идентификатор карточки.
+            params: параметры алгоритма.
+
+        Returns:
+            SM2Params: Параметры алгоритма для карточки.
+        """
         card_params = list(filter(lambda params: params.id == card_id, sm2_params))
         if card_params:
             card = card_params[0]

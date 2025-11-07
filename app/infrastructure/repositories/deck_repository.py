@@ -3,6 +3,7 @@ from domain.entities.deck import Deck
 from domain.interfaces.deck_repository import DeckRepository
 from infrastructure.repositories.card_repository import cards
 
+
 decks = [
     Deck(id="0", name="Langs", algorithm="sm2")
 ]
@@ -10,21 +11,54 @@ decks = [
 
 class DBDeckRepository(DeckRepository):
     """
-    Конкретная реализация, которая знает, КАК именно получать данные (из БД, файла, API и т.д.)
+    Класс для работы с базой данных
     """
     def get_all_decks(self) -> list[Deck]:
+        """
+        Возвращает все доски.
+
+        Returns:
+            list[Deck]: Все доски.
+        """
         return decks
     
     def get_deck_by_id(self, deck_id: str) -> Deck | None:
+        """
+        Возвращает доску по id.
+
+        Args:
+            deck_id (str): Уникальный идентификатор.
+
+        Returns:
+            Deck: Доска.
+        """
         for deck in decks:
             if deck.id == deck_id:
                 return deck
         return None
     
     def get_cards(self, deck_id: str) -> list[Card]:
+        """
+        Возвращает карточки для доски.
+
+        Args:
+            deck_id (str): Уникальный идентификатор.
+
+        Returns:
+            list[Card]: Список карт доски.
+        """
         return list(filter(lambda card: card.deck_id == deck_id, cards))
 
     def add_deck(self, deck: Deck) -> Deck:
+        """
+        Добавляет новую доску.
+
+        Args:
+            new_deck (Deck): Тело новой доски.
+
+        Returns:
+            Deck: Добавленная доска.
+        """
         new_deck = Deck(
             id=str(len(self.get_all_decks())),
             name=deck.name,
@@ -34,12 +68,31 @@ class DBDeckRepository(DeckRepository):
         return deck
     
     def change_deck(self, deck_id: str, new_deck: Deck) -> Deck:
+        """
+        Заменяет параметры доски.
+
+        Args:
+            deck_id (str): Уникальный идентификатор доски, которую необходимо изменить.
+            new_deck (Deck): Тело доски с обновленными параметрами.
+        
+        Returns:
+            Deck: Обновленная доска.
+        """
         deck = next(filter(lambda deck: deck.id == deck_id, decks))
         deck.name = new_deck.name
         deck.algorithm = new_deck.algorithm
         return deck   
 
     def delete_deck(self, deck_id: str) -> Deck:
+        """
+        Удаляет доску.
+        
+        Args:
+            deck_id (str): Уникальный идентификатор доски, которую необходимо удалить.
+        
+        Returns:
+            Deck: Удаленная доска.
+        """
         deck = next(filter(lambda deck: deck.id == deck_id, decks))
         deck_index = decks.index(deck)
         return decks.pop(deck_index)

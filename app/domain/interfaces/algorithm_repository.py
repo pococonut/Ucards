@@ -4,20 +4,59 @@ from domain.entities.card import Card
 
 
 class IntervalAlgorithmRepository(ABC):
-    "Контракт алгоритма для повторения"
+    """
+    Интерфейс метода алгоритма повторения карточек
+    """
     @classmethod
-    def calculate_interval(self, card_id: str, quality: int) -> dict:
-        "Вычисление интервала для повтора карточки"
+    def calculate_interval(self, card_id: str, quality: int):
+        """
+        Вычисляет интервал для повтора карточки.
+
+        Args:
+            card_id (str): Уникальный идентификатор карточки.
+            quality (int): Качество ответа.
+
+        Returns:
+            Интервал повторения карточки.
+        """
         pass
 
     @classmethod
-    def get_card_params(self, card_id: str) -> dict:
+    def get_card_params(self, card_id: str):
+        """
+        Возвращает параметры выбранного алгоритма для карточки.
+
+        Args:
+            card_id (str): Уникальный идентификатор карточки.
+
+        Returns:
+            Параметры алгоритма.
+        """
         pass
 
     @classmethod
-    def add_card_params(self, card_id: str, params: dict) -> dict:
+    def add_card_params(self, card_id: str, params):
+        """
+        Сохраняет параметры выбранного алгоритма для карточки.
+
+        Args:
+            card_id (str): Уникальный идентификатор карточки.
+            params: параметры алгоритма.
+
+        Returns:
+            Параметры алгоритма для карточки.
+        """
         pass
 
     @classmethod
-    def get_learning_cards(self, cards) -> list[Card]:
+    def get_learning_cards(self, cards: list) -> list[Card]:
+        """
+        Возвращает карточки для повторения согласно интервалу рассчитанного алгоритмом.
+
+        Args:
+            cards (list): Список карточек доски.
+            
+        Returns:
+            Карточки для повторения.
+        """
         pass

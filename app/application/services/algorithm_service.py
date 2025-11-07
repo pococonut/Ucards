@@ -6,19 +6,32 @@ from infrastructure.repositories.algorithm_repository import SM2Repository
 
 class SM2Service:
     """
-    Реализация алгоритма SM-2
-    I — Интервал до следующего повторения (в днях).
-    EF — Фактор Легкости (E-Factor). Определяет, насколько быстро растет интервал. Начинается с 2.5.
-    q — Качество ответа от 1 до 4, где:
+    Реализация логики работы алгоритма SM2.
+    """
+    
+    def __init__(self, sm2_repository: SM2Repository):
+        self._sm2_repository = sm2_repository
+
+    def calculate_interval(self, card_id: str, quality: int) -> SM2Params:
+        """
+        Вычисляет интервал для повтора карточки.
+
+        Реализация алгоритма SM-2
+        I — Интервал до следующего повторения (в днях).
+        EF — Фактор Легкости (E-Factor). Определяет, насколько быстро растет интервал. Начинается с 2.5.
+        q — Качество ответа от 1 до 4, где:
         4 — Идеальный ответ
         3 — Правильный ответ
         2 — Правильный ответ с затруднением
         1 — Неправильный ответ
-    """
-    def __init__(self, sm2_repository: SM2Repository):
-        self._sm2_repository = sm2_repository
 
-    def calculate_interval(self, card_id: str, quality: int):
+        Args:
+            card_id (str): Уникальный идентификатор карточки.
+            quality (int): Качество ответа.
+
+        Returns:
+            SM2Params: Обновленные параметры алгоритма для карточки.
+        """
         card_params = self._sm2_repository.get_card_params(card_id)
         EF = card_params.interval
         I  = card_params.ef
@@ -33,9 +46,27 @@ class SM2Service:
         return params
 
     def get_card_params(self, card_id: str) -> SM2Params:
+        """
+        Возвращает параметры выбранного алгоритма для карточки.
+
+        Args:
+            card_id (str): Уникальный идентификатор карточки.
+
+        Returns:
+            SM2Params: Параметры алгоритма.
+        """
         return self._sm2_repository.get_card_params(card_id)
     
     def get_learning_cards(self, cards) -> list[Card]:
+        """
+        Возвращает карточки для повторения согласно интервалу рассчитанного алгоритмом.
+
+        Args:
+            cards (list): Список карточек доски.
+            
+        Returns:
+            list[Card]: Карточки для повторения.
+        """
         res = []
         for card in cards:
             params: SM2Params = self.get_card_params(card.id)
@@ -44,4 +75,14 @@ class SM2Service:
         return res
 
     def add_card_params(self, card_id: str, params: SM2Params) -> SM2Params:
+        """
+        Сохраняет параметры выбранного алгоритма для карточки.
+
+        Args:
+            card_id (str): Уникальный идентификатор карточки.
+            params: параметры алгоритма.
+
+        Returns:
+            SM2Params: Параметры алгоритма для карточки.
+        """
         return self._sm2_repository.add_card_params(card_id, params)
