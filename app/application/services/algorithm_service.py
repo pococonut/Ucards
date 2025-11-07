@@ -39,7 +39,14 @@ class SM2Service:
 
         EF_new = max(1.3, EF + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02)))
         I_new = round(I * EF_new) if quality > 2 else 1
-        show_dt_new = date.fromordinal(show_dt + I_new) if quality > 2 else date.fromordinal(date.today().toordinal() + 1)
+        
+        if quality > 2:
+            show_dt_new = date.fromordinal(show_dt + I_new) 
+            if show_dt_new < date.today():
+                show_dt_new = date.fromordinal(date.today().toordinal() + I_new)
+        else:
+            show_dt_new = date.fromordinal(date.today().toordinal() + 1)
+            
         params = SM2Params(id=card_id, ef=EF_new, interval=I_new, quality=quality, show_dt=show_dt_new)
         
         self.add_card_params(card_id, params)
