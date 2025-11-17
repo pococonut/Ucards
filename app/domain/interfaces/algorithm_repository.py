@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from app.domain.entities.algorithm import SM2Params
 from domain.entities.card import Card
 
 
@@ -8,7 +9,7 @@ class IntervalAlgorithmRepository(ABC):
     Интерфейс метода алгоритма повторения карточек
     """
     @abstractmethod
-    def calculate_interval(self, card_id: str, quality: int):
+    def calculate_interval(self, card_id: str, quality: int) -> SM2Params:
         """
         Вычисляет интервал для повтора карточки.
 
@@ -22,7 +23,7 @@ class IntervalAlgorithmRepository(ABC):
         pass
 
     @abstractmethod
-    def get_card_params(self, card_id: str):
+    def get_card_params(self, card_id: str) -> SM2Params:
         """
         Возвращает параметры выбранного алгоритма для карточки.
 
@@ -35,7 +36,7 @@ class IntervalAlgorithmRepository(ABC):
         pass
 
     @abstractmethod
-    def add_card_params(self, card_id: str, params):
+    def add_card_params(self, card_id: str, params: SM2Params) -> SM2Params:
         """
         Сохраняет параметры выбранного алгоритма для карточки.
 

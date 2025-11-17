@@ -55,7 +55,7 @@ class DeckRepository(ABC):
         pass
 
     @abstractmethod
-    def change_deck(self, deck_id, new_deck: Deck) -> Deck:
+    def change_deck(self, deck_id: str, new_deck: Deck) -> Deck:
         """
         Заменяет параметры доски.
 

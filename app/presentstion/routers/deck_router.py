@@ -1,7 +1,8 @@
 from datetime import date
 from fastapi import APIRouter, Depends, HTTPException
 
-from domain.entities.algorithm import SM2Params
+from app.domain.entities.deck import Deck
+from app.domain.entities.card import Card
 from application.services.algorithm_service import SM2Service
 from presentstion.dependencies import get_deck_service, get_sm2_service
 from application.services.deck_service import DeckService
@@ -13,7 +14,7 @@ router = APIRouter()
 
 
 @router.get("/deck", tags=['deck'])
-async def get_decks(deck_service: DeckService = Depends(get_deck_service)):
+async def get_decks(deck_service: DeckService = Depends(get_deck_service)) -> list[Deck]:
     """
     Возвращает все доски.
 
@@ -25,7 +26,7 @@ async def get_decks(deck_service: DeckService = Depends(get_deck_service)):
 
 @router.get("/deck/{deck_id}", tags=['deck'])
 async def get_deck(deck_id: str, 
-                   deck_service: DeckService = Depends(get_deck_service)):
+                   deck_service: DeckService = Depends(get_deck_service)) -> Deck:
     """
     Возвращает доску по id.
 
@@ -43,7 +44,7 @@ async def get_deck(deck_id: str,
 
 @router.get("/deck/{deck_id}/cards", tags=['deck'])
 async def get_cards(deck_id: str,
-              deck_service: DeckService = Depends(get_deck_service)):
+              deck_service: DeckService = Depends(get_deck_service)) -> list[Card]:
     """
     Возвращает карточки для доски.
 
@@ -57,9 +58,9 @@ async def get_cards(deck_id: str,
 
 
 @router.get("/deck/{deck_id}/learn", tags=['deck'])
-async def get_cards(deck_id: str,
+async def learn_cards(deck_id: str,
               deck_service: DeckService = Depends(get_deck_service),
-              algorithm_service: SM2Service = Depends(get_sm2_service)):
+              algorithm_service: SM2Service = Depends(get_sm2_service)) -> list[Card]:
     """
     Возвращает карточки для изучения.
 
@@ -76,7 +77,7 @@ async def get_cards(deck_id: str,
 
 @router.post("/deck", tags=['deck'])
 async def post_deck(deck: DeckBase, 
-              deck_service: DeckService = Depends(get_deck_service)):
+              deck_service: DeckService = Depends(get_deck_service)) -> Deck:
     """
     Добавляет новую доску.
 
@@ -92,7 +93,7 @@ async def post_deck(deck: DeckBase,
 @router.put("/deck/{deck_id}", tags=['deck'])
 async def put_deck(new_deck: DeckBase, 
              deck_id: str,
-             deck_service: DeckService = Depends(get_deck_service)):
+             deck_service: DeckService = Depends(get_deck_service)) -> Deck:
     """
     Заменяет параметры доски.
 
@@ -108,7 +109,7 @@ async def put_deck(new_deck: DeckBase,
 
 @router.delete("/deck/{deck_id}", tags=['deck'])
 async def del_deck(deck_id: str,
-             deck_service: DeckService = Depends(get_deck_service)):
+             deck_service: DeckService = Depends(get_deck_service)) -> Deck:
     """
     Удаляет доску.
     

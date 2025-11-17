@@ -64,7 +64,7 @@ class SM2Service:
         """
         return self._sm2_repository.get_card_params(card_id)
     
-    def get_learning_cards(self, cards) -> list[Card]:
+    def get_learning_cards(self, cards: list[Card]) -> list[Card]:
         """
         Возвращает карточки для повторения согласно интервалу рассчитанного алгоритмом.
 

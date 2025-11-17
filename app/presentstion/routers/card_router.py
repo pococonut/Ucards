@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 
+from app.domain.entities.card import Card
 from presentstion.dependencies import get_card_service, get_sm2_service
 from application.services.card_service import CardService
 from application.services.algorithm_service import SM2Service
@@ -10,7 +11,7 @@ router = APIRouter()
 
 
 @router.get("/card", tags=['card'])
-async def get_cards(card_service: CardService = Depends(get_card_service)):
+async def get_cards(card_service: CardService = Depends(get_card_service)) -> list[Card]:
     """
     Возвращает все карточки.
 
@@ -22,7 +23,7 @@ async def get_cards(card_service: CardService = Depends(get_card_service)):
 
 @router.get("/card/{card_id}", tags=['card'])
 async def get_card(card_id: str, 
-                   card_service: CardService = Depends(get_card_service)):
+                   card_service: CardService = Depends(get_card_service)) -> Card:
     """
     Возвращает карточку по id.
 
@@ -40,7 +41,7 @@ async def get_card(card_id: str,
 
 @router.post("/card", tags=['card'])
 async def post_card(card: CardBase, 
-              card_service: CardService = Depends(get_card_service)):
+              card_service: CardService = Depends(get_card_service)) -> Card:
     """
     Добавляет новую карточку.
 
@@ -56,7 +57,7 @@ async def post_card(card: CardBase,
 @router.put("/card/{card_id}", tags=['card'])
 async def put_card(new_card: CardBase, 
              card_id: str,
-             card_service: CardService = Depends(get_card_service)):
+             card_service: CardService = Depends(get_card_service)) -> Card:
     """
     Заменяет параметры карточки.
 
@@ -72,7 +73,7 @@ async def put_card(new_card: CardBase,
 
 @router.delete("/card/{card_id}", tags=['card'])
 async def del_card(card_id: str,
-             card_service: CardService = Depends(get_card_service)):
+             card_service: CardService = Depends(get_card_service)) -> Card:
     """
     Удаляет карточку.
     
@@ -88,7 +89,7 @@ async def del_card(card_id: str,
 @router.post("/card/answer/{card_id}", tags=['card'])
 async def post_answer(card_id: str, 
                 quality: int, 
-                algorithm_service: SM2Service = Depends(get_sm2_service)):
+                algorithm_service: SM2Service = Depends(get_sm2_service)) -> Card:
     """
     Получает ответ на карточку.
     

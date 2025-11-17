@@ -6,7 +6,7 @@ from infrastructure.repositories.algorithm_repository import SM2Repository
 from infrastructure.repositories.deck_repository import DBDeckRepository
 
 
-def get_card_service():
+def get_card_service() -> CardService:
     """
     Инициализирует объект репозитория и передает его в логику работы методов карточки.
     """
@@ -14,7 +14,7 @@ def get_card_service():
     return CardService(repository)
 
 
-def get_deck_service():
+def get_deck_service() -> DeckService:
     """
     Инициализирует объект репозитория и передает его в логику работы методов доски.
     """
@@ -22,7 +22,7 @@ def get_deck_service():
     return DeckService(repository)
 
 
-def get_sm2_service():
+def get_sm2_service() -> SM2Service:
     """
     Инициализирует объект репозитория и передает его в логику работы методов алгоритма SM2.
     """
