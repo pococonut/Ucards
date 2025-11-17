@@ -31,7 +31,7 @@ class DeckService:
         """
         return self._deck_repository.get_deck_by_id(deck_id)
     
-    def get_cards(self, deck_id) -> list[Card]:
+    def get_cards(self, deck_id: str) -> list[Card]:
         """
         Возвращает карточки для доски.
 

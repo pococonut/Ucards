@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from presentstion.routers import card_router, deck_router
+from app.presentstion.routers import card_router, deck_router
 
 
 app = FastAPI(title="Ucards")

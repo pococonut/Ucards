@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from domain.entities.card import Card
 
@@ -7,7 +7,7 @@ class CardRepository(ABC):
     """
     Интерфейс методов карточки
     """
-    @classmethod
+    @abstractmethod
     def get_all_cards(self) -> list[Card]:
         """
         Возвращает все карточки.
@@ -17,7 +17,7 @@ class CardRepository(ABC):
         """
         pass
 
-    @classmethod
+    @abstractmethod
     def get_card_by_id(self, card_id: str) -> Card:
         """
         Возвращает карточку по id.
@@ -30,7 +30,7 @@ class CardRepository(ABC):
         """
         pass
     
-    @classmethod
+    @abstractmethod
     def add_card(self, new_card: Card) -> Card:
         """
         Добавляет новую карточку.
@@ -43,7 +43,7 @@ class CardRepository(ABC):
         """
         pass
 
-    @classmethod
+    @abstractmethod
     def change_card(self, card_id: str, new_card: Card) -> Card:
         """
         Заменяет параметры карточки.
@@ -57,7 +57,7 @@ class CardRepository(ABC):
         """
         pass
     
-    @classmethod
+    @abstractmethod
     def delete_card(self, card_id: str) -> Card:
         """
         Удаляет карточку.

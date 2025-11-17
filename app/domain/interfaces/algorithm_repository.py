@@ -1,4 +1,4 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from domain.entities.card import Card
 
@@ -7,7 +7,7 @@ class IntervalAlgorithmRepository(ABC):
     """
     Интерфейс метода алгоритма повторения карточек
     """
-    @classmethod
+    @abstractmethod
     def calculate_interval(self, card_id: str, quality: int):
         """
         Вычисляет интервал для повтора карточки.
@@ -21,7 +21,7 @@ class IntervalAlgorithmRepository(ABC):
         """
         pass
 
-    @classmethod
+    @abstractmethod
     def get_card_params(self, card_id: str):
         """
         Возвращает параметры выбранного алгоритма для карточки.
@@ -34,7 +34,7 @@ class IntervalAlgorithmRepository(ABC):
         """
         pass
 
-    @classmethod
+    @abstractmethod
     def add_card_params(self, card_id: str, params):
         """
         Сохраняет параметры выбранного алгоритма для карточки.
@@ -48,7 +48,7 @@ class IntervalAlgorithmRepository(ABC):
         """
         pass
 
-    @classmethod
+    @abstractmethod
     def get_learning_cards(self, cards: list) -> list[Card]:
         """
         Возвращает карточки для повторения согласно интервалу рассчитанного алгоритмом.

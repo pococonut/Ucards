@@ -1,11 +1,11 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 
 from domain.entities.card import Card
 from domain.entities.deck import Deck
 
 
 class DeckRepository(ABC):
-    @classmethod
+    @abstractmethod
     def get_all_decks(self) -> list[Deck]:
         """
         Возвращает все доски.
@@ -15,7 +15,7 @@ class DeckRepository(ABC):
         """
         pass
 
-    @classmethod
+    @abstractmethod
     def get_deck_by_id(self) -> Deck:
         """
         Возвращает доску по id.
@@ -28,7 +28,7 @@ class DeckRepository(ABC):
         """
         pass
 
-    @classmethod
+    @abstractmethod
     def get_cards(self, deck_id: str) -> list[Card]:
         """
         Возвращает карточки для доски.
@@ -41,7 +41,7 @@ class DeckRepository(ABC):
         """
         pass
     
-    @classmethod
+    @abstractmethod
     def add_deck(self, new_deck: Deck) -> Deck:
         """
         Добавляет новую доску.
@@ -54,7 +54,7 @@ class DeckRepository(ABC):
         """
         pass
 
-    @classmethod
+    @abstractmethod
     def change_deck(self, deck_id, new_deck: Deck) -> Deck:
         """
         Заменяет параметры доски.
@@ -68,7 +68,7 @@ class DeckRepository(ABC):
         """
         pass
     
-    @classmethod
+    @abstractmethod
     def delete_deck(self, deck_id: str) -> Deck:
         """
         Удаляет доску.
