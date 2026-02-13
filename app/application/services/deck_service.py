@@ -1,5 +1,5 @@
 from domain.entities.card import Card
-from domain.entities.deck import Deck
+from app.domain.entities.deck import Deck
 from domain.interfaces.deck_repository import DeckRepository
 
 
@@ -17,7 +17,8 @@ class DeckService:
         Returns:
             list[Deck]: Все доски.
         """
-        return self._deck_repository.get_all_decks()
+        result: list[Deck] = self._deck_repository.get_all_decks()
+        return result
     
     def get_deck_by_id(self, deck_id: str) -> Deck:
         """
@@ -29,7 +30,8 @@ class DeckService:
         Returns:
             Deck: Доска.
         """
-        return self._deck_repository.get_deck_by_id(deck_id)
+        result: Deck = self._deck_repository.get_deck_by_id(deck_id)
+        return result
     
     def get_cards(self, deck_id: str) -> list[Card]:
         """
@@ -41,7 +43,8 @@ class DeckService:
         Returns:
             list[Card]: Список карт доски.
         """
-        return self._deck_repository.get_cards(deck_id)
+        result: list[Card] = self._deck_repository.get_cards(deck_id)
+        return result
     
     def add_deck(self, new_deck: Deck) -> Deck:
         """
@@ -53,7 +56,8 @@ class DeckService:
         Returns:
             Deck: Добавленная доска.
         """
-        return self._deck_repository.add_deck(new_deck)
+        result: Deck = self._deck_repository.add_deck(new_deck)
+        return result
 
     def change_deck(self, deck_id: str, new_deck: Deck) -> Deck:
         """
@@ -66,7 +70,8 @@ class DeckService:
         Returns:
             Deck: Обновленная доска.
         """
-        return self._deck_repository.change_deck(deck_id, new_deck)
+        result: Deck = self._deck_repository.change_deck(deck_id, new_deck)
+        return result
     
     def delete_deck(self, deck_id: str) -> Deck:
         """
@@ -78,6 +83,7 @@ class DeckService:
         Returns:
             Deck: Удаленная доска.
         """
-        return self._deck_repository.delete_deck(deck_id)
+        result: Deck = self._deck_repository.delete_deck(deck_id)
+        return result
     
     

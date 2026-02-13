@@ -1,5 +1,6 @@
 from datetime import date
 
+from domain.entities.card import Card
 from domain.entities.algorithm import SM2Params
 from domain.interfaces.algorithm_repository import IntervalAlgorithmRepository
 
@@ -13,6 +14,9 @@ class SM2Repository(IntervalAlgorithmRepository):
     """
     Реализация взаимодействия с базой данных для алгоритма SM2.
     """
+
+    def calculate_interval(self, card_id: str, quality: int) -> SM2Params:
+        pass
 
     def get_card_params(self, card_id: str) -> SM2Params:
         """
@@ -51,3 +55,6 @@ class SM2Repository(IntervalAlgorithmRepository):
         else:
             sm2_params.append(params)
         return list(filter(lambda params: params.id == card_id, sm2_params))
+
+    def get_learning_cards(self, cards: list[Card]) -> list[Card]:
+        pass

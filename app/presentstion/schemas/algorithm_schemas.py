@@ -1,22 +1,29 @@
-from dataclasses import dataclass
 from datetime import date
 
+from pydantic import BaseModel
 
-@dataclass
-class SM2Params:
+
+class SM2Base(BaseModel):
     """
-    Класс для представления алгоритма SM2.
+    Схема алгоритма SM2.
 
     Attributes:
-        id: Уникальный иденттификатор.
         interval: Количество дней через которое показать карточку.
         ef: Коэффициент эффективности.
         quality: Качество ответа (от 0 до 4).
         show_dt: Дата в которую показать карточку.
     """
-    id: str
     interval: float
     ef: float
     quality: int
     show_dt: date
-    
+
+
+class SM2Response(SM2Base):
+    """
+    Схема для ответа с SM2.
+
+    Attributes:
+        id: Уникальный иденттификатор.
+    """
+    id: str

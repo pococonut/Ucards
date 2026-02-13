@@ -16,7 +16,8 @@ class CardService:
         Returns:
             list[Card]: Все карточки.
         """
-        return self._card_repository.get_all_cards()
+        result: list[Card] = self._card_repository.get_all_cards()
+        return result
     
     def get_card_by_id(self, card_id: str) -> Card:
         """

@@ -21,7 +21,8 @@ async def get_decks(deck_service: DeckService = Depends(get_deck_service)) -> li
     Returns:
         list[Deck]: Все доски.
     """
-    return deck_service.get_all_decks()
+    result: list[Deck] = deck_service.get_all_decks()
+    return result
 
 
 @router.get("/deck/{deck_id}", tags=['deck'])
@@ -36,7 +37,7 @@ async def get_deck(deck_id: str,
     Returns:
         Deck: Доска.
     """
-    deck = deck_service.get_deck_by_id(deck_id)
+    deck: Deck = deck_service.get_deck_by_id(deck_id)
     if not deck:
         raise HTTPException(status_code=404, detail="Deck not found")
     return deck
@@ -54,7 +55,8 @@ async def get_cards(deck_id: str,
     Returns:
         list[Card]: Список карт доски.
     """
-    return deck_service.get_cards(deck_id)
+    result: list[Card] = deck_service.get_cards(deck_id)
+    return result
 
 
 @router.get("/deck/{deck_id}/learn", tags=['deck'])
@@ -71,7 +73,7 @@ async def learn_cards(deck_id: str,
         Deck: Список карточек для изучения.
     """
     cards = deck_service.get_cards(deck_id)
-    learning_cards = algorithm_service.get_learning_cards(cards)
+    learning_cards: list[Card] = algorithm_service.get_learning_cards(cards)
     return learning_cards
 
 
@@ -87,7 +89,8 @@ async def post_deck(deck: DeckBase,
     Returns:
         Deck: Добавленная доска.
     """
-    return deck_service.add_deck(deck)
+    result: Deck = deck_service.add_deck(deck)
+    return result
 
 
 @router.put("/deck/{deck_id}", tags=['deck'])
@@ -104,7 +107,8 @@ async def put_deck(new_deck: DeckBase,
     Returns:
         Deck: Обновленная доска.
     """
-    return  deck_service.change_deck(deck_id, new_deck)
+    result: Deck = deck_service.change_deck(deck_id, new_deck)
+    return result
 
 
 @router.delete("/deck/{deck_id}", tags=['deck'])
@@ -119,6 +123,7 @@ async def del_deck(deck_id: str,
     Returns:
         Deck: Удаленная доска.
     """
-    return deck_service.delete_deck(deck_id)
+    result: Deck = deck_service.delete_deck(deck_id)
+    return result
 
 

@@ -53,7 +53,7 @@ class DBCardRepository(CardRepository):
             description=card.description
         )
         cards.append(new_card)
-        return card
+        return new_card
     
     def change_card(self, card_id: str, new_card: Card) -> Card:
         """

@@ -50,12 +50,12 @@ class IntervalAlgorithmRepository(ABC):
         pass
 
     @abstractmethod
-    def get_learning_cards(self, cards: list) -> list[Card]:
+    def get_learning_cards(self, cards: list[Card]) -> list[Card]:
         """
         Возвращает карточки для повторения согласно интервалу рассчитанного алгоритмом.
 
         Args:
-            cards (list): Список карточек доски.
+            cards (list[Card]): Список карточек доски.
             
         Returns:
             Карточки для повторения.

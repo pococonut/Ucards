@@ -4,21 +4,21 @@ from typing import Any
 
 class CardBase(BaseModel):
     """
-    Модель для параметров карточки.
+    Схема параметров карточки.
 
     Attributes:
         name: Лицевая сторона карточки.
         description: Задняя сторона карточки.
-        deck_id: Идентификватор доски к которой принадлежит карточка. 
+        deck_id: Идентификатор доски к которой принадлежит карточка.
     """
     name: str
     description: str
     deck_id: str
 
 
-class CardSh(CardBase):
+class CardResponse(CardBase):
     """
-    Модель параметров карточки с идентификатором.
+    Схема для ответа с Card.
 
     Attributes:
         id: Уникальный идентификатор карточки.

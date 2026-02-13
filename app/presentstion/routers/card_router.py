@@ -1,29 +1,34 @@
+from typing import Optional
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.domain.entities.card import Card
+from app.presentstion.mappers.alghorithm_mapper import SM2Mapper
+from app.presentstion.mappers.card_mapper import CardMapper
+from app.presentstion.schemas.algorithm_schemas import SM2Response
 from presentstion.dependencies import get_card_service, get_sm2_service
 from application.services.card_service import CardService
 from application.services.algorithm_service import SM2Service
-from presentstion.schemas.card_schemas import CardBase
+from presentstion.schemas.card_schemas import CardBase, CardResponse
 
 
 router = APIRouter()
 
 
 @router.get("/card", tags=['card'])
-async def get_cards(card_service: CardService = Depends(get_card_service)) -> list[Card]:
+async def get_cards(card_service: CardService = Depends(get_card_service)) -> list[CardResponse]:
     """
     Возвращает все карточки.
 
     Returns:
-        list[Card]: Все карточки.
+        list[CardResponse]: Все карточки.
     """
-    return card_service.get_all_cards()
+    result: list[CardResponse] =  [CardMapper.to_response(card) for card in card_service.get_all_cards()]
+    return result
 
 
 @router.get("/card/{card_id}", tags=['card'])
-async def get_card(card_id: str, 
-                   card_service: CardService = Depends(get_card_service)) -> Card:
+async def get_card(card_id: str,
+                   card_service: CardService = Depends(get_card_service)) -> CardResponse:
     """
     Возвращает карточку по id.
 
@@ -31,33 +36,36 @@ async def get_card(card_id: str,
         card_id (str): Уникальный идентификатор.
 
     Returns:
-        Card: Карточка.
+        CardResponse: Карточка.
     """
-    card = card_service.get_card_by_id(card_id)
+    card: Optional[Card] = card_service.get_card_by_id(card_id)
     if not card:
         raise HTTPException(status_code=404, detail="Card not found")
-    return card
+    
+    response: CardResponse = CardMapper.to_response(card)
+    return response
 
 
 @router.post("/card", tags=['card'])
 async def post_card(card: CardBase, 
-              card_service: CardService = Depends(get_card_service)) -> Card:
+                    card_service: CardService = Depends(get_card_service)) -> CardResponse:
     """
     Добавляет новую карточку.
 
     Args:
-        new_card (Card): Тело новой карточки.
+        new_card (CardBase): Параметры новой карточки.
 
     Returns:
-        Card: Добавленная карточка.
+        CardResponse: Добавленная карточка.
     """
-    return card_service.add_card(card)
+    result: CardResponse = CardMapper.to_response(card_service.add_card(card))
+    return result
 
 
 @router.put("/card/{card_id}", tags=['card'])
-async def put_card(new_card: CardBase, 
+async def put_card(new_card: CardBase,
              card_id: str,
-             card_service: CardService = Depends(get_card_service)) -> Card:
+             card_service: CardService = Depends(get_card_service)) -> CardResponse:
     """
     Заменяет параметры карточки.
 
@@ -66,14 +74,15 @@ async def put_card(new_card: CardBase,
         new_card (Card): Тело карточки с обновленными параметрами.
     
     Returns:
-        Card: Обновленная карточка.
+        CardResponse: Обновленная карточка.
     """
-    return  card_service.change_card(card_id, new_card)
+    result: CardResponse = CardMapper.to_response(card_service.change_card(card_id, new_card))
+    return result
 
 
 @router.delete("/card/{card_id}", tags=['card'])
 async def del_card(card_id: str,
-             card_service: CardService = Depends(get_card_service)) -> Card:
+                   card_service: CardService = Depends(get_card_service)) -> CardResponse:
     """
     Удаляет карточку.
     
@@ -81,15 +90,16 @@ async def del_card(card_id: str,
         card_id (str): Уникальный идентификатор карточки, которую необходимо изменить.
     
     Returns:
-        Card: Удаленная картчочка.
+        CardResponse: Удаленная картчочка.
     """
-    return card_service.delete_card(card_id)
+    result: CardResponse = CardMapper.to_response(card_service.delete_card(card_id))
+    return result
 
 
 @router.post("/card/answer/{card_id}", tags=['card'])
-async def post_answer(card_id: str, 
-                quality: int, 
-                algorithm_service: SM2Service = Depends(get_sm2_service)) -> Card:
+async def post_answer(card_id: str,
+                quality: int,
+                algorithm_service: SM2Service = Depends(get_sm2_service)) -> SM2Response:
     """
     Получает ответ на карточку.
     
@@ -98,8 +108,8 @@ async def post_answer(card_id: str,
         quality (int): Качество ответа от 0 до 5.
     
     Returns:
-        Card: Обновленные параметры алгоритма для карточки.
+        SM2Response: Обновленные параметры алгоритма для карточки.
     """
-    new_params = algorithm_service.calculate_interval(card_id, quality)
-    return new_params
+    result: SM2Response = SM2Mapper.to_response(algorithm_service.calculate_interval(card_id, quality))
+    return result
 
