@@ -65,7 +65,7 @@ class DBDeckRepository(DeckRepository):
             algorithm=deck.algorithm
         )
         decks.append(new_deck)
-        return deck
+        return new_deck
     
     def change_deck(self, deck_id: str, new_deck: Deck) -> Deck:
         """

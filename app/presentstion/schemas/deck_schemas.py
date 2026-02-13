@@ -13,9 +13,9 @@ class DeckBase(BaseModel):
     algorithm: str
 
 
-class DeckSh(DeckBase):
+class DeckResponce(DeckBase):
     """
-    Модель параметров доски с идентификатором.
+    Схема для ответа с Deck.
 
     Attributes:
         id: Уникальный идентификатор доски.

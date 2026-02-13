@@ -25,7 +25,3 @@ class CardResponse(CardBase):
     """
     id: str
 
-
-# class UpdatedParameter(BaseModel):
-#     parameter: str
-#     value: Any
