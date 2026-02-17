@@ -32,7 +32,8 @@ class SM2Repository(IntervalAlgorithmRepository):
         if not card_params:
             params = SM2Params(id=card_id, interval=1, ef=2.5, quality=1, show_dt=date.today())
             card_params = self.add_card_params(card_id, params=params)
-        return card_params[0]
+        result: SM2Params = card_params[0]
+        return result
     
     def add_card_params(self, card_id: str, params: SM2Params) -> SM2Params:
         """
@@ -54,7 +55,9 @@ class SM2Repository(IntervalAlgorithmRepository):
             card.show_dt = params.show_dt
         else:
             sm2_params.append(params)
-        return list(filter(lambda params: params.id == card_id, sm2_params))
+
+        result = list(filter(lambda params: params.id == card_id, sm2_params))
+        return result
 
     def get_learning_cards(self, cards: list[Card]) -> list[Card]:
         pass

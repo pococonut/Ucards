@@ -20,7 +20,8 @@ class DBDeckRepository(DeckRepository):
         Returns:
             list[Deck]: Все доски.
         """
-        return decks
+        result: list[Deck] = decks
+        return result
     
     def get_deck_by_id(self, deck_id: str) -> Deck | None:
         """
@@ -33,9 +34,13 @@ class DBDeckRepository(DeckRepository):
             Deck: Доска.
         """
         for deck in decks:
-            if deck.id == deck_id:
-                return deck
+            if deck.id != deck_id:
+                continue
+
+            result: Deck = deck
+            return result
         return None
+
     
     def get_cards(self, deck_id: str) -> list[Card]:
         """
@@ -47,7 +52,8 @@ class DBDeckRepository(DeckRepository):
         Returns:
             list[Card]: Список карт доски.
         """
-        return list(filter(lambda card: card.deck_id == deck_id, cards))
+        result: list[Card] = list(filter(lambda card: card.deck_id == deck_id, cards))
+        return result
 
     def add_deck(self, deck: Deck) -> Deck:
         """
@@ -59,7 +65,7 @@ class DBDeckRepository(DeckRepository):
         Returns:
             Deck: Добавленная доска.
         """
-        new_deck = Deck(
+        new_deck: Deck = Deck(
             id=str(len(self.get_all_decks())),
             name=deck.name,
             algorithm=deck.algorithm
@@ -78,7 +84,7 @@ class DBDeckRepository(DeckRepository):
         Returns:
             Deck: Обновленная доска.
         """
-        deck = next(filter(lambda deck: deck.id == deck_id, decks))
+        deck: Deck = next(filter(lambda deck: deck.id == deck_id, decks))
         deck.name = new_deck.name
         deck.algorithm = new_deck.algorithm
         return deck   
@@ -93,7 +99,8 @@ class DBDeckRepository(DeckRepository):
         Returns:
             Deck: Удаленная доска.
         """
-        deck = next(filter(lambda deck: deck.id == deck_id, decks))
+        deck= next(filter(lambda deck: deck.id == deck_id, decks))
         deck_index = decks.index(deck)
-        return decks.pop(deck_index)
+        reesult: Deck = decks.pop(deck_index)
+        return reesult
     

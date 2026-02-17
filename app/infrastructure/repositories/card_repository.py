@@ -19,7 +19,8 @@ class DBCardRepository(CardRepository):
         Returns:
             list[Card]: Все карточки.
         """
-        return cards
+        result: list[Card] = cards
+        return result
     
     def get_card_by_id(self, card_id: str) -> Card | None:
         """
@@ -33,9 +34,11 @@ class DBCardRepository(CardRepository):
         """
         for card in cards:
             if card.id == card_id:
-                return card
-        return None
-    
+                result: Card = card
+                return result
+            return None
+
+
     def add_card(self, card: Card) -> Card:
         """
         Добавляет новую карточку.
@@ -46,7 +49,7 @@ class DBCardRepository(CardRepository):
         Returns:
             Card: Добавленная карточка.
         """
-        new_card = Card(
+        new_card: Card = Card(
             id=str(len(self.get_all_cards())),
             deck_id=card.deck_id,
             name=card.name,
@@ -65,7 +68,7 @@ class DBCardRepository(CardRepository):
         Returns:
             Card: Обновленная карточка.
         """
-        card = next(filter(lambda card: card.id == card_id, cards))
+        card: Card = next(filter(lambda card: card.id == card_id, cards))
         card.deck_id = new_card.deck_id
         card.name = new_card.name
         card.description = new_card.description
@@ -83,5 +86,6 @@ class DBCardRepository(CardRepository):
         """
         card = next(filter(lambda card: card.id == card_id, cards))
         card_index = cards.index(card)
-        return cards.pop(card_index)
+        result: Card = cards.pop(card_index)
+        return result
     
