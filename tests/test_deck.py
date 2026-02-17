@@ -31,13 +31,13 @@ def test_put_deck():
     response = client.put(
         "/deck/0",
         json={
-            "name": "test",
-            "algorithm": "test"
+            "name": "put_test",
+            "algorithm": "put_test"
             }
     )
     assert response.status_code == 200
-    assert response.json()["name"] == "test"
-    assert response.json()["algorithm"] == "test"
+    assert response.json()["name"] == "put_test"
+    assert response.json()["algorithm"] == "put_test"
 
 
 def test_get_all_deck_cards():
