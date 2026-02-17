@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from domain.entities.card import Card
+from app.domain.entities.card import Card
 
 
 class CardRepository(ABC):

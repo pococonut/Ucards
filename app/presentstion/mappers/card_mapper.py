@@ -1,6 +1,6 @@
 
-from domain.entities.card import Card
-from presentstion.schemas.card_schemas import CardResponse
+from app.domain.entities.card import Card
+from app.presentstion.schemas.card_schemas import CardResponse
 
 
 class CardMapper:

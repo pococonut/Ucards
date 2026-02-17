@@ -1,9 +1,9 @@
-from application.services.card_service import CardService
-from application.services.algorithm_service import SM2Service
-from infrastructure.repositories.card_repository import DBCardRepository
-from application.services.deck_service import DeckService
-from infrastructure.repositories.algorithm_repository import SM2Repository
-from infrastructure.repositories.deck_repository import DBDeckRepository
+from app.application.services.card_service import CardService
+from app.application.services.algorithm_service import SM2Service
+from app.infrastructure.repositories.card_repository import DBCardRepository
+from app.application.services.deck_service import DeckService
+from app.infrastructure.repositories.algorithm_repository import SM2Repository
+from app.infrastructure.repositories.deck_repository import DBDeckRepository
 
 
 def get_card_service() -> CardService:

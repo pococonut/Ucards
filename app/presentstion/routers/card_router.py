@@ -5,10 +5,10 @@ from app.domain.entities.card import Card
 from app.presentstion.mappers.alghorithm_mapper import SM2Mapper
 from app.presentstion.mappers.card_mapper import CardMapper
 from app.presentstion.schemas.algorithm_schemas import SM2Response
-from presentstion.dependencies import get_card_service, get_sm2_service
-from application.services.card_service import CardService
-from application.services.algorithm_service import SM2Service
-from presentstion.schemas.card_schemas import CardBase, CardResponse
+from app.presentstion.dependencies import get_card_service, get_sm2_service
+from app.application.services.card_service import CardService
+from app.application.services.algorithm_service import SM2Service
+from app.presentstion.schemas.card_schemas import CardBase, CardResponse
 
 
 router = APIRouter()

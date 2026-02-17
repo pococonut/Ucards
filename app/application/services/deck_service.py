@@ -1,6 +1,6 @@
-from domain.entities.card import Card
+from app.domain.entities.card import Card
 from app.domain.entities.deck import Deck
-from domain.interfaces.deck_repository import DeckRepository
+from app.domain.interfaces.deck_repository import DeckRepository
 
 
 class DeckService:

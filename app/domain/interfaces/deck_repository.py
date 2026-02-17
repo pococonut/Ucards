@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from domain.entities.card import Card
-from domain.entities.deck import Deck
+from app.domain.entities.card import Card
+from app.domain.entities.deck import Deck
 
 
 class DeckRepository(ABC):

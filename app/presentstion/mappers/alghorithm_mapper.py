@@ -1,6 +1,6 @@
 
-from domain.entities.algorithm import SM2Params
-from presentstion.schemas.algorithm_schemas import SM2Response
+from app.domain.entities.algorithm import SM2Params
+from app.presentstion.schemas.algorithm_schemas import SM2Response
 
 
 class SM2Mapper:
