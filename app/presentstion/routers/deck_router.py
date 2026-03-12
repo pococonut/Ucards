@@ -1,15 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException
 
-from app.domain.entities.deck import Deck
-from app.domain.entities.card import Card
-from app.presentstion.mappers.card_mapper import CardMapper
-from app.presentstion.mappers.deck_mapper import DeckMapper
-from app.presentstion.schemas.card_schemas import CardResponse
-from app.application.services.algorithm_service import SM2Service
-from app.presentstion.dependencies import get_deck_service, get_sm2_service
-from app.application.services.deck_service import DeckService
-from app.application.services.deck_service import DeckService
-from app.presentstion.schemas.deck_schemas import DeckBase, DeckResponce
+from domain.entities.deck import Deck
+from domain.entities.card import Card
+from presentstion.mappers.card_mapper import CardMapper
+from presentstion.mappers.deck_mapper import DeckMapper
+from presentstion.schemas.card_schemas import CardResponse
+from application.services.algorithm_service import SM2Service
+from presentstion.dependencies import get_deck_service, get_sm2_service
+from application.services.deck_service import DeckService
+from application.services.deck_service import DeckService
+from presentstion.schemas.deck_schemas import DeckBase, DeckResponce
 
 
 router = APIRouter()

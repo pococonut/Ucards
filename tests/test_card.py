@@ -43,13 +43,23 @@ def test_put_card():
 
 
 def test_post_answer():
-    good_response = client.post("/card/answer/0?quality=5")
-    assert good_response.status_code == 200
+    first_good_response = client.post("/card/answer/0?quality=5")
+    assert first_good_response.status_code == 200
 
     bad_response = client.post("/card/answer/0?quality=0") 
     assert bad_response.status_code == 200
 
-    assert good_response.json()["interval"] > bad_response.json()["interval"]
+    assert first_good_response.json()["interval"] > bad_response.json()["interval"]
+
+    second_good_response = client.post("/card/answer/0?quality=5")
+    assert second_good_response.status_code == 200
+
+    assert second_good_response.json()["interval"] > bad_response.json()["interval"]
+
+    third_good_response = client.post("/card/answer/0?quality=5")
+    assert third_good_response.status_code == 200
+
+    assert third_good_response.json()["interval"] > second_good_response.json()["interval"]
 
 
 def test_delete_card():

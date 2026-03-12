@@ -1,5 +1,5 @@
-from app.domain.entities.deck import Deck
-from app.presentstion.schemas.deck_schemas import DeckResponce
+from domain.entities.deck import Deck
+from presentstion.schemas.deck_schemas import DeckResponce
 
 
 class DeckMapper:

@@ -1,8 +1,8 @@
 from datetime import date
 
-from app.domain.entities.card import Card
-from app.domain.entities.algorithm import SM2Params
-from app.domain.interfaces.algorithm_repository import IntervalAlgorithmRepository
+from domain.entities.card import Card
+from domain.entities.algorithm import SM2Params
+from domain.interfaces.algorithm_repository import IntervalAlgorithmRepository
 
 sm2_params = [
     SM2Params(id="0", interval=1, ef=2.5, quality=1, show_dt=date(year=2025, month=10, day=29)),

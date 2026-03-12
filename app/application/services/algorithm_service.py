@@ -1,7 +1,7 @@
 from datetime import date
-from app.domain.entities.card import Card
-from app.domain.entities.algorithm import SM2Params
-from app.infrastructure.repositories.algorithm_repository import SM2Repository
+from domain.entities.card import Card
+from domain.entities.algorithm import SM2Params
+from infrastructure.repositories.algorithm_repository import SM2Repository
 
 
 class SM2Service:

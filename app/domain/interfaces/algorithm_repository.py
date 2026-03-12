@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
-from app.domain.entities.algorithm import SM2Params
-from app.domain.entities.card import Card
+from domain.entities.algorithm import SM2Params
+from domain.entities.card import Card
 
 
 class IntervalAlgorithmRepository(ABC):

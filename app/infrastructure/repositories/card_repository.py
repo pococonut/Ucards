@@ -1,5 +1,5 @@
-from app.domain.entities.card import Card
-from app.domain.interfaces.card_repository import CardRepository
+from domain.entities.card import Card
+from domain.interfaces.card_repository import CardRepository
 
 
 cards = [
