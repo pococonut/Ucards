@@ -5,7 +5,7 @@ from domain.entities.card import Card
 from presentstion.mappers.alghorithm_mapper import SM2Mapper
 from presentstion.mappers.card_mapper import CardMapper
 from presentstion.schemas.algorithm_schemas import SM2Response
-from presentstion.dependencies import get_card_service, get_sm2_service
+from presentstion.dependencies import get_user_use_cases
 from application.services.card_service import CardService
 from application.services.algorithm_service import SM2Service
 from presentstion.schemas.card_schemas import CardBase, CardResponse
@@ -15,7 +15,7 @@ router = APIRouter()
 
 
 @router.get("/card", tags=['card'])
-async def get_cards(card_service: CardService = Depends(get_card_service)) -> list[CardResponse]:
+async def get_cards(card_service: CardService = Depends(get_user_use_cases)) -> list[CardResponse]:
     """
     Возвращает все карточки.
 
@@ -28,7 +28,7 @@ async def get_cards(card_service: CardService = Depends(get_card_service)) -> li
 
 @router.get("/card/{card_id}", tags=['card'])
 async def get_card(card_id: str,
-                   card_service: CardService = Depends(get_card_service)) -> CardResponse:
+                   card_service: CardService = Depends(get_user_use_cases)) -> CardResponse:
     """
     Возвращает карточку по id.
 
@@ -48,7 +48,7 @@ async def get_card(card_id: str,
 
 @router.post("/card", tags=['card'])
 async def post_card(card: CardBase, 
-                    card_service: CardService = Depends(get_card_service)) -> CardResponse:
+                    card_service: CardService = Depends(get_user_use_cases)) -> CardResponse:
     """
     Добавляет новую карточку.
 
@@ -63,9 +63,9 @@ async def post_card(card: CardBase,
 
 
 @router.put("/card/{card_id}", tags=['card'])
-async def put_card(new_card: CardBase,
+async def put_card(new_card: dict,
              card_id: str,
-             card_service: CardService = Depends(get_card_service)) -> CardResponse:
+             card_service: CardService = Depends(get_user_use_cases)) -> CardResponse:
     """
     Заменяет параметры карточки.
 
@@ -82,7 +82,7 @@ async def put_card(new_card: CardBase,
 
 @router.delete("/card/{card_id}", tags=['card'])
 async def del_card(card_id: str,
-                   card_service: CardService = Depends(get_card_service)) -> CardResponse:
+                   card_service: CardService = Depends(get_user_use_cases)) -> bool:
     """
     Удаляет карточку.
     
@@ -92,24 +92,24 @@ async def del_card(card_id: str,
     Returns:
         CardResponse: Удаленная картчочка.
     """
-    result: CardResponse = CardMapper.to_response(card_service.delete_card(card_id))
+    result: bool = card_service.delete_card(card_id)
     return result
 
 
-@router.post("/card/answer/{card_id}", tags=['card'])
-async def post_answer(card_id: str,
-                quality: int,
-                algorithm_service: SM2Service = Depends(get_sm2_service)) -> SM2Response:
-    """
-    Получает ответ на карточку.
+# @router.post("/card/answer/{card_id}", tags=['card'])
+# async def post_answer(card_id: str,
+#                 quality: int,
+#                 algorithm_service: SM2Service = Depends(get_sm2_service)) -> SM2Response:
+#     """
+#     Получает ответ на карточку.
     
-    Args:
-        card_id (str): Уникальный идентификатор карточки.
-        quality (int): Качество ответа от 0 до 5.
+#     Args:
+#         card_id (str): Уникальный идентификатор карточки.
+#         quality (int): Качество ответа от 0 до 5.
     
-    Returns:
-        SM2Response: Обновленные параметры алгоритма для карточки.
-    """
-    result: SM2Response = SM2Mapper.to_response(algorithm_service.calculate_interval(card_id, quality))
-    return result
+#     Returns:
+#         SM2Response: Обновленные параметры алгоритма для карточки.
+#     """
+#     result: SM2Response = SM2Mapper.to_response(algorithm_service.calculate_interval(card_id, quality))
+#     return result
 

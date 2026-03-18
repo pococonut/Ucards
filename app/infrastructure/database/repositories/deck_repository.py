@@ -1,7 +1,7 @@
 from domain.entities.card import Card
 from domain.entities.deck import Deck
 from domain.interfaces.deck_repository import DeckRepository
-from infrastructure.repositories.card_repository import cards
+from infrastructure.database.repositories.card_repository import cards
 
 
 decks = [

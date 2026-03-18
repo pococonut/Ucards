@@ -55,7 +55,7 @@ class CardService:
         """
         return self._card_repository.change_card(card_id, new_card)
     
-    def delete_card(self, card_id: str) -> Card:
+    def delete_card(self, card_id: str) -> bool:
         """
         Удаляет карточку.
         

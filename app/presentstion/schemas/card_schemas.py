@@ -13,7 +13,7 @@ class CardBase(BaseModel):
     """
     name: str
     description: str
-    deck_id: str
+    deck_id: int
 
 
 class CardResponse(CardBase):
@@ -23,5 +23,5 @@ class CardResponse(CardBase):
     Attributes:
         id: Уникальный идентификатор карточки.
     """
-    id: str
+    id: int
 

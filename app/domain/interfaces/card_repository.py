@@ -58,7 +58,7 @@ class CardRepository(ABC):
         pass
     
     @abstractmethod
-    def delete_card(self, card_id: str) -> Card:
+    def delete_card(self, card_id: str) -> bool:
         """
         Удаляет карточку.
         
